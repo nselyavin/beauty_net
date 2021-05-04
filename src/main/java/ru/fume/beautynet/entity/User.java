@@ -15,7 +15,7 @@ import java.util.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Identity - номер будети увеличиваться вверх
     private Long id;
     @Column(nullable = false)
     private String name;
@@ -33,7 +33,7 @@ public class User {
     // Создать отдельную таблицу и связать айдишник и роль пользователя
     @ElementCollection(targetClass = ERole.class)
     @CollectionTable(name = "user_role",
-    joinColumns = @JoinColumn("user_id"))
+        joinColumns = @JoinColumn(name = "user_id"))
     private Set<ERole> role = new HashSet<>();
 
     // Каскадное поведение, когда удалим пользователя, то все прилегающие посты, тоже будут удалены из базы данных
