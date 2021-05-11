@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +25,10 @@ public class Post {
     private Integer likes;
     @Column(columnDefinition = "-1")
     private Float rating;
+
+
+    public Post() {
+    }
 
     // У одного поста, один создатель
     @ManyToOne(fetch =  FetchType.LAZY)

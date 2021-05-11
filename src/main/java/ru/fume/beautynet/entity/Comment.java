@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "comments")
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +30,8 @@ public class Comment {
     @PrePersist
     protected void onCreate(){
         this.createdData = LocalDateTime.now();
+    }
+
+    public Comment() {
     }
 }
