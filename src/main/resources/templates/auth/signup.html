@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="ru" xmlns:th="https://thymeleaf.org">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>BeautyNet</title>
+		<meta name="description" content="Социальная сеть Красоты">
+		<meta name="author" content="Селявин Никита">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		
+		<link rel="stylesheet" href="../../css/style.css">
+
+		<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+	</head>
+	
+	<body>
+		<!--Header-->
+		<header class="header">
+		</header>
+		<!--End Header-->
+		<main class="page">
+		<div class="container">
+			<div class="login">
+				<div class="login_logo">
+					<img src="../img/logo-1.png" alt="BeautyNet logo">
+				</div>
+				<div class="login_form checkin-form">
+					<h1>Регистрация аккаунта</h1>
+
+					<form action="" th:method="post" th:action="@{/signup}"  th:object="${user}">
+						<div class="login_form_input">
+							<input type="text" th:field="*{name}" placeholder="Введите ваше имя" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="text" th:field="*{lastName}" placeholder="Введите вашу фамилию" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="text" th:field="*{username}" placeholder="Введите имя пользователя" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="email"  th:field="*{email}" placeholder="Введите ваш E-mail" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="password"  th:field="*{password}"  placeholder="Введите ваш пароль" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="password"  th:field="*{password}"  placeholder="Подтвердите пароль" required="" autocomplete="off">
+						</div>
+						
+						<div class="login_form_input_button">
+							<button type="submit">Зарегистрироваться</button>
+						</div>
+					</form>
+					
+					
+				</div>
+			</div>
+		</div>
+			
+		</main>
+		<footer class="footer">
+			
+		</footer>
+
+		
+		<script src="../js/main.js"></script>
+	</body>
+
+</html>
