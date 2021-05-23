@@ -5,6 +5,12 @@ body{
 h1{
 	text-align: center;
 }
+
+h2{
+	color: #444;
+	text-align: center;
+}
+
 .header{
 	position: fixed;
 	top: 0;
@@ -151,7 +157,7 @@ h1{
 .post_img {
 }
 .post_img img {
-	width: 100%;
+	max-height: 800px;
 }
 .post_from {
 }
@@ -283,6 +289,7 @@ h1{
 	background-image: url(../../img/like-up-action.png);
 	background-repeat: no-repeat;
 	background-size: 30px;
+	color: green;
 }
 .rating-dislike{
 	background-image: url(../../img/like-down.png);
@@ -295,6 +302,7 @@ h1{
 	background-image: url(../../img/like-down-action.png);
 	background-repeat: no-repeat;
 	background-size: 30px;
+	color: red;
 }
 
 
@@ -444,6 +452,26 @@ h1{
 .regak-link a {
 	text-decoration: none;
 	color: #000;
+}
+
+#inputed-tags{
+ 	width: 15%;
+	padding-right: 25px;
+	margin: 15px auto auto;
+	list-style-type: none;
+}
+
+.tags-element{
+	color: white;
+	margin-top: 8px;
+	background: #9a3183;
+	padding: 0 8px 3px 8px;
+	border-radius: 3px;
+}
+
+.tags-element::after{
+	color: lightgray;
+	content: " \1F7AB";
 }
 
 /*/////////////////*/

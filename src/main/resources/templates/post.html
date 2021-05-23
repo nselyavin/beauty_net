@@ -63,17 +63,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <div class="post_from">
                 <p th:text="${post.username}">creator username</p>
             </div>
-            <div class="post-list_tags">
-                <div class="post-list_tags_item">
-                    <a href="">tag1</a>
-                </div>
-                <div class="post-list_tags_item">
-                    <a href="">tag1</a>
-                </div>
-                <div class="post-list_tags_item">
-                    <a href="">tag1</a>
+
+            <div class="post-list_tags" >
+                <div class="post-list_tags_item" th:each="tag : ${post.tags}">
+                    <a th:href="@{/search/{tagName}(tagName=${tag})}" th:text="${tag}"></a>
                 </div>
             </div>
+
             <div class="post_rating">
                 <div class="post_rating_item" th:classappend="${(bLiked) ? 'rating-like-action' : 'rating-like'}">
                     <form th:action="@{/post/{id}/like(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
@@ -81,14 +77,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                         <input type="submit" value="">
                     </form>
 
-                    <p><span th:text="${post.likes}">100</span></p>
+                    <p><span th:text="${post.likes}">0</span></p>
                 </div>
                 <div class="post_rating_item" th:classappend="${(bDisliked) ? 'rating-dislike-action' : 'rating-dislike'}">
                     <form th:action="@{/post/{id}/dislike(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
                         <input type="hidden" name="markedUsername" th:value="noname">
                         <input type="submit" value="">
                     </form>
-                    <p><span th:text="${post.dislikes}">20</span></p>
+                    <p><span th:text="${post.dislikes}">0</span></p>
                 </div>
             </div>
             <div class="post_text">
@@ -96,14 +92,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             </div>
 
 
-            <div >
-                <ul>
-                    <li>
-                        <form th:method="DELETE" th:action="@{/post/{id}/delete(id=${post.getId()})}">
-                            <button type="submit">Delete post</button>
-                        </form>
-                    </li>
-                </ul>
+            <div>
+                    <form th:method="DELETE" th:action="@{/post/{id}/delete(id=${post.getId()})}">
+                        <button class="btn-sm" type="submit">Delete post</button>
+                    </form>
             </div>
 
             <div class="post_comment-text">
@@ -130,9 +122,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                     <div th:each="comment : ${comments}">
                         <li>
                             <span th:text="${comment.getUsername()}">Username</span>:
-                            <p th:text="${comment.getMessage()}">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae veritatis recusandae, iusto eos, error delectus aut facilis minima saepe officia eum neque id quisquam odit enim repellat asperiores ut necessitatibus.
-                            </p>
+                            <p th:text="${comment.getMessage()}"> </p>
                         </li>
                     </div>
                 </ul>
@@ -143,7 +133,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 </main>
 <footer class="footer">
 </footer>
-<script th:src="@{styles/cssandjs/main.js}"></script>
+<script th:src="@{/styles/cssandjs/main.js}"></script>
 </body>
 
 </html>

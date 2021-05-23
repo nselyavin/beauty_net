@@ -14,8 +14,8 @@ public class PostDTO {
     private String title;
     private String description;
     private String brand;
-    private Set<String> tags;
     private String username;
     private MultipartFile image;
     private String markedUsername;
+    private String tagsStr;
 }

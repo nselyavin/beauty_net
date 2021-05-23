@@ -31,33 +31,8 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public String show(@PathVariable("postId") long postId, Model model) throws IOException {
-        Post post = postService.getPostById(postId);
 
-        if(post == null){
-            return "redirect:/";
-        }
-
-        PostDTO postDTO = new PostDTO();
-        CommentDTO commentDTO = new CommentDTO();
-        List<Comment> comments = commentService.getAllCommentsForPost(postId);
-
-        model.addAttribute("post", post);
-        model.addAttribute("postDTO", postDTO);
-        model.addAttribute("commentDTO", commentDTO);
-        model.addAttribute("comments", comments);
-        model.addAttribute("image", post.getEncodedImage());
-
-
-        if(post.getLikedUsers().stream().anyMatch(u -> u.equals("noname"))){
-            model.addAttribute("bLiked", true);
-        } else {
-            model.addAttribute("bLiked", false);
-        }
-        if(post.getDislikedUsers().stream().anyMatch(u -> u.equals("noname"))) {
-            model.addAttribute("bDisliked", true);
-        } else {
-            model.addAttribute("bDisliked", false);
-        }
+        buildModel(postId, model);
 
         return "post";
     }
@@ -116,13 +91,46 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/dislike")
-    public String dislikePost(@PathVariable("postId") Long postId,
+    public String dislikePost(@PathVariable("postId") long postId,
                               @Valid PostDTO postDTO,
                               Model model){
         String likedUser = postDTO.getMarkedUsername();
         Post post = postService.dislikePost(postId, likedUser);
 
         return "redirect:/post/" + postId;
+    }
+
+
+    private void buildModel(long postId, Model model) {
+        Post post = postService.getPostById(postId);
+
+        if(post == null){
+            throw new RuntimeException("Post not found");
+        }
+
+        PostDTO postDTO = new PostDTO();
+        CommentDTO commentDTO = new CommentDTO();
+        List<Comment> comments = commentService.getAllCommentsForPost(postId);
+
+        model.addAttribute("post", post);
+        model.addAttribute("postDTO", postDTO);
+        model.addAttribute("commentDTO", commentDTO);
+        model.addAttribute("comments", comments);
+        model.addAttribute("image", post.getEncodedImage());
+
+
+        if(post.getLikedUsers().stream().anyMatch(u -> u.equals("noname"))){
+            model.addAttribute("bLiked", true);
+        } else {
+            model.addAttribute("bLiked", false);
+        }
+        if(post.getDislikedUsers().stream().anyMatch(u -> u.equals("noname"))) {
+            model.addAttribute("bDisliked", true);
+        } else {
+            model.addAttribute("bDisliked", false);
+        }
+
+        //return model;
     }
 
 

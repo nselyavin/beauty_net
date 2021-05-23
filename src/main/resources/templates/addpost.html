@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Add post</title>
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+    <script th:src="@{/styles/cssandjs/main.js}"></script>
 </head>
 <body>
 <!--Header-->
@@ -39,19 +40,21 @@
     <div class="container">
         <div>Add post</div>
         <!-- Форма добалвения поста. Ну всякие лейблы, переносы строк, все по красоте -->
-          <form class="login_form" th:method="POST" th:action="@{/post/addpost}" th:object="${postDTO}" enctype="multipart/form-data">
+          <form id="post_form" class="login_form" th:method="POST" th:action="@{/post/addpost}" th:object="${postDTO}" enctype="multipart/form-data">
             <input class="login_form_input" type="text" name="title" th:field="*{title}" placeholder="Title"/><br>
             <input class="login_form_input" type="text" name="brand" th:field="*{brand}" placeholder="Brand"/><br>
             <input class="login_form_input" type="file"name="file" th:field="*{image}" placeholder="uploadImage"/><br>
             <input class="login_form_input" type="text" name="description" th:field="*{description}" placeholder="Description" style="height: 45px"/><br>
             <input class="login_form_input" type="text"name="username" th:field="*{username}" placeholder="Username"/><br>
-            <button class="login_form_input_button" type="submit">Создать</button>
 
+              <ul id="inputed-tags"></ul>
+              <input type="hidden" name="tagsStr" th:field="*{tagsStr}" id="tagsForm">
+              <input id="tags-input" class="login_form_input" maxlength="25" type="text" onkeypress="return addTag(event)" autocomplete="off" placeholder="Tags"><br>
+              <input type="button" value="Создать" onclick="this.parentNode.submit();">
           </form>
     </div>
 </main>
 <footer class="footer">
 </footer>
-<script th:src="@{styles/cssandjs/main.js}"></script>
 </body>
 </html>

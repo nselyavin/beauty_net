@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -46,7 +44,10 @@ public class PostService {
             LOG.error("Failed upload image");
             post.setImage(null);
         }
+        System.out.println();
+        post.setTags(getTagsFromStr(postDTO.getTagsStr()));
 
+        System.out.println(post.getTags());
         LOG.info("Saving Post for User: {}", postDTO.getUsername());
         return postRepository.save(post);
     }
@@ -122,5 +123,31 @@ public class PostService {
     public void deletePost(Long postId){
         Post post = postRepository.findPostById(postId);
         postRepository.delete(post);
+    }
+
+    private Set<String> getTagsFromStr(String str){
+        String[] tags = str.split("&;");
+        return new HashSet<>(Arrays.asList(tags));
+    }
+
+    public List<Post> getByTagPost(String tagName) {
+        List<Post> posts = postRepository.findAllByOrderByCreatedDateDesc();
+        if(posts.size() == 0){
+            LOG.info("No one post in repository");
+        }
+
+        List<Post> postsByTag = new ArrayList<>();
+
+        for (int i = 0; i < 50 && i < posts.size(); i++){
+            if(posts.get(i).getTags().stream().anyMatch(t -> t.equals(tagName) )) {
+                postsByTag.add(posts.get(i));
+            }
+        }
+
+        if(posts.size() == 0){
+            LOG.info("No one post in repository by tag {}", tagName);
+        }
+
+        return postsByTag;
     }
 }

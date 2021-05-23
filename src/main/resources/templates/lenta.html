@@ -43,13 +43,19 @@
 </header>
 <!--End Header-->
 
-<!-- Кнопка добавить пост -->
+
+
 <main class="page">
 <div class="container">
     <h1>Lenta</h1>
+
+    <h2 th:if="${searchTag != null}" th:text="'Поиск по тегу: ' + ${searchTag}"></h2>
+
+    <!-- Кнопка добавить пост -->
     <div class="btn-sm">
         <a href="/post/addpost">Add post</a>
     </div>
+
 
     <!-- Цикл по постам -->
     <div class="post-list">
@@ -81,6 +87,6 @@
 <!--    </div>-->
 <footer class="footer">
 </footer>
-<script th:src="@{styles/cssandjs/main.js}"></script>
+<script th:src="@{/styles/cssandjs/main.js}"></script>
 </body>
 </html>
