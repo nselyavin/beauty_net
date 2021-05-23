@@ -5,11 +5,10 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-public class UserDTO {
+public class CommentDTO {
     private Long id;
     @NotEmpty
-    private String name;
+    private String message;
     @NotEmpty
-    private String lastName;
     private String username;
 }

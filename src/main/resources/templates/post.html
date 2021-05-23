@@ -1,0 +1,149 @@
+<!doctype html>
+
+<html lang="en"
+xmlns:th="https://thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BeautyNet</title>
+    <meta name="description" content="Социальная сеть Красоты">
+    <meta name="author" content="Селявин Никита">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!--Header-->
+<header class="header">
+    <div class="top-panel">
+        <div class="top-panel_logo">
+            <a href="/"><img th:src="@{/img/logo-1.png}" alt=""></a>
+        </div>
+        <div class="top-panel_link">
+            <a href="">Forum</a>
+        </div>
+        <div id="clel" class="top-panel_user">
+            <div class="top-panel_user_name">User Name</div>
+            <div class="top-panel_user_foto">
+                <img th:src="@{/img/user/1.jpg}" alt="">
+            </div>
+        </div>
+        <div id="elmenu" class="top-panel_menu">
+            <ul class="top-panel_menu_list">
+                <li><a href="">Profile</a></li>
+                <hr style="width: 70%;">
+                <li><a href="">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!--End Header-->
+
+<main class="page">
+    <div class="container">
+        <div class="post">
+            <div class="post_title">
+                <h2 th:text="${post.title}">title</h2>
+            </div>
+            <div class="post_brand">
+                <h3 th:text="${post.brand}">brand</h3>
+            </div>
+            <div class="post_img">
+                <img th:src="@{'data:image/jpeg;base64,'+${image}}" style="max-width: 800px">
+            </div>
+            <div class="post_from">
+                <p th:text="${post.username}">creator username</p>
+            </div>
+            <div class="post-list_tags">
+                <div class="post-list_tags_item">
+                    <a href="">tag1</a>
+                </div>
+                <div class="post-list_tags_item">
+                    <a href="">tag1</a>
+                </div>
+                <div class="post-list_tags_item">
+                    <a href="">tag1</a>
+                </div>
+            </div>
+            <div class="post_rating">
+                <div class="post_rating_item" th:classappend="${(bLiked) ? 'rating-like-action' : 'rating-like'}">
+                    <form th:action="@{/post/{id}/like(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
+                        <input type="hidden" name="markedUsername" th:value="noname">
+                        <input type="submit" value="">
+                    </form>
+
+                    <p><span th:text="${post.likes}">100</span></p>
+                </div>
+                <div class="post_rating_item" th:classappend="${(bDisliked) ? 'rating-dislike-action' : 'rating-dislike'}">
+                    <form th:action="@{/post/{id}/dislike(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
+                        <input type="hidden" name="markedUsername" th:value="noname">
+                        <input type="submit" value="">
+                    </form>
+                    <p><span th:text="${post.dislikes}">20</span></p>
+                </div>
+            </div>
+            <div class="post_text">
+                <p th:text="${post.description}">description</p>
+            </div>
+
+
+            <div >
+                <ul>
+                    <li>
+                        <form th:method="DELETE" th:action="@{/post/{id}/delete(id=${post.getId()})}">
+                            <button type="submit">Delete post</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="post_comment-text">
+                Leave a comment...
+            </div>
+
+            <div class="post_comment-form">
+                <form th:method="POST" th:action="@{/post/{id}/addcomment(id=${post.getId()})}" th:object="${commentDTO}">
+                    <div class="post_comment-form_input">
+                        <input type="text" name="username" th:field="*{username}" placeholder="username"/>
+                    </div>
+                    <div class="post_comment-form_input">
+                        <input type="text" name="username" th:field="*{message}" placeholder="message"/>
+                    </div>
+                    <div class="post_comment-form_button">
+                        <button type="submit">Comment</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="post_comments">
+                <h3>Comments</h3>
+                <ul class="post_comments_list">
+                    <div th:each="comment : ${comments}">
+                        <li>
+                            <span th:text="${comment.getUsername()}">Username</span>:
+                            <p th:text="${comment.getMessage()}">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae veritatis recusandae, iusto eos, error delectus aut facilis minima saepe officia eum neque id quisquam odit enim repellat asperiores ut necessitatibus.
+                            </p>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</main>
+<footer class="footer">
+</footer>
+<script th:src="@{styles/cssandjs/main.js}"></script>
+</body>
+
+</html>

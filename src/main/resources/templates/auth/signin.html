@@ -1,6 +1,9 @@
 <!doctype html>
 
-<html lang="ru" xmlns:th="https://thymeleaf.org">
+<html lang="ru"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 	<head>
 		<meta charset="utf-8">
@@ -20,7 +23,7 @@
 	<body>
 		<!--Header-->
 		<header class="header">
-			
+
 		</header>
 		<!--End Header-->
 		<main class="page">
@@ -28,18 +31,20 @@
 			
 			<div class="login">
 				<div class="login_logo">
-					<img src="../../img/logo-1.png" alt="BeautyNet logo">
+					<a href="/">
+						<img th:src="@{/img/logo-1.png}" alt="BeautyNet logo" >
+					</a>
 				</div>
 				<div class="login_form">
 					<h1>Войдите в свой аккаунт</h1>
 
-					<form action="" name="login-form" th:method="post" th:object="${user}">
+					<form action="/" method="POST" name="login-form">
 
 						<div class="login_form_input">
-							<input type="email"  th:field="*{name}" placeholder="Введите ваш E-mail" required="" autocomplete="off">
+							<input type="text" name="username" placeholder="Введите имя пользователя" required="" autocomplete="off" autofocus="true">
 						</div>
 						<div class="login_form_input">
-							<input type="password" th:field="*{password}" placeholder="Введите ваш пароль" required="" autocomplete="off">
+							<input type="password" name="password" placeholder="Введите ваш пароль" required="" autocomplete="off">
 						</div>
 						
 						<div class="login_form_input_button">
@@ -47,7 +52,7 @@
 						</div>
 					</form>
 
-					<p class="forgot-pass"><a href="/passRecovery">Забыли пароль?</a></p>
+					<p class="forgot-pass"><a href="/recovery">Забыли пароль?</a></p>
 					<div class="regak-link">
 						<a href="/signup">Создать аккаунт</a>
 					</div>

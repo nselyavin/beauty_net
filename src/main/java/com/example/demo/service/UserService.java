@@ -1,58 +1,62 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.User;
 import com.example.demo.entity.enums.ERole;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Service
 public class UserService {
     public static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-    private final UserRepository userRepository;
-//    ToDo добавить BCryptEncoder
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    UserRepository userRepository;
 
-    public User createUser(User userIn){
+
+    public int createUser(User userIn){
+        User userFromDB = userRepository.findByUsername(userIn.getUsername());
+
+        if(userFromDB  != null){
+            LOG.error("The username {" + userIn.getUsername() +  "} already exist. Please check credentials");
+            return 1;
+        }
+
         User user = new User();
+        user.setEmail(userIn.getEmail());
         user.setName(userIn.getName());
         user.setLastName(userIn.getLastName());
         user.setUsername(userIn.getUsername());
-        user.setEmail(userIn.getEmail());
-        // ToDo кодировать пароль
         user.setPassword(userIn.getPassword());
-        user.getRole().add(ERole.USER_ROLE);
+        user.getRoles().add(ERole.ROLE_USER);
 
-        try {
-            LOG.info("Saving User {}", userIn.getEmail());
-            return userRepository.save(user);
-        } catch (Exception e) {
-            LOG.error("Error during registration. {}", e.getMessage());
-            throw new RuntimeException("The user " + user.getUsername() + " already exist. Please check credentials");
+        userRepository.save(userIn);
+
+        return 0;
+    }
+
+    public boolean deleteUser(Long userId) {
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+            return true;
         }
+        return false;
     }
+//    public User updateUser(UserDTO userDTO, User userIn){
+//        User user = userRepository.findUserByUsername(userIn.getName());
+//        user.setName(userDTO.getName());
+//        user.setLastName(userDTO.getLastName());
+//
+//        return userRepository.save(user);
+//    }
 
-    public User updateUser(UserDTO userDTO, Principal principal){
-        User user = getUserByPrincipal(principal);
-        user.setName(userDTO.getName());
-        user.setLastName(userDTO.getLastName());
-
-        return userRepository.save(user);
-    }
-
-    private User getUserByPrincipal(Principal principal) {
-        String username = principal.getName();
-        return userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Username not found with username " + username));
-    }
 }
