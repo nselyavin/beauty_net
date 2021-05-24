@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.enums.ERole;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
+import com.example.demo.entity.enums.Roles;
 import com.example.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -22,26 +25,30 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public int createUser(User userIn){
-        User userFromDB = userRepository.findByUsername(userIn.getUsername());
+    public User createUser(UserDTO userIn){
+        User userFromDB = userRepository.findUserByUsername(userIn.getUsername());
 
         if(userFromDB  != null){
             LOG.error("The username {" + userIn.getUsername() +  "} already exist. Please check credentials");
-            return 1;
+           throw new RuntimeException("User not found");
         }
 
         User user = new User();
         user.setEmail(userIn.getEmail());
         user.setName(userIn.getName());
-        user.setLastName(userIn.getLastName());
+        user.setLastName(userIn.getLastname());
         user.setUsername(userIn.getUsername());
-        user.setPassword(userIn.getPassword());
-        user.getRoles().add(ERole.ROLE_USER);
+        user.setPassword(bCryptPasswordEncoder.encode(userIn.getPassword()));
 
-        userRepository.save(userIn);
+        Set<String> roles = new HashSet<>();
+        roles.add(Roles.ROLE_USER);
 
-        return 0;
+        user.setRole(roles);
+
+        return userRepository.save(user);
     }
 
     public boolean deleteUser(Long userId) {

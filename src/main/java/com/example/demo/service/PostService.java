@@ -44,10 +44,8 @@ public class PostService {
             LOG.error("Failed upload image");
             post.setImage(null);
         }
-        System.out.println();
         post.setTags(getTagsFromStr(postDTO.getTagsStr()));
 
-        System.out.println(post.getTags());
         LOG.info("Saving Post for User: {}", postDTO.getUsername());
         return postRepository.save(post);
     }

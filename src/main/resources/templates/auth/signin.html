@@ -12,8 +12,8 @@
 		<meta name="description" content="Социальная сеть Красоты">
 		<meta name="author" content="Селявин Никита">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		
-		<link rel="stylesheet" href="../css/style.css">
+
+		<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
 
 		<!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,14 +31,14 @@
 			
 			<div class="login">
 				<div class="login_logo">
-					<a href="/">
+					<a href="/auth">
 						<img th:src="@{/img/logo-1.png}" alt="BeautyNet logo" >
 					</a>
 				</div>
 				<div class="login_form">
 					<h1>Войдите в свой аккаунт</h1>
 
-					<form action="/" method="POST" name="login-form">
+					<form action="/auth" method="POST" name="login-form">
 
 						<div class="login_form_input">
 							<input type="text" name="username" placeholder="Введите имя пользователя" required="" autocomplete="off" autofocus="true">
@@ -52,9 +52,9 @@
 						</div>
 					</form>
 
-					<p class="forgot-pass"><a href="/recovery">Забыли пароль?</a></p>
+					<p class="forgot-pass"><a href="/auth/recovery">Забыли пароль?</a></p>
 					<div class="regak-link">
-						<a href="/signup">Создать аккаунт</a>
+						<a href="/auth/signup">Создать аккаунт</a>
 					</div>
 				</div>
 			</div>
@@ -65,8 +65,8 @@
 			
 		</footer>
 
-		
-		<script src="../js/main.js"></script>
+
+		<script th:src="@{/styles/cssandjs/main.js}"></script>
 	</body>
 
 </html>

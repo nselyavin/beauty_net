@@ -14,8 +14,8 @@
 		<meta name="description" content="Социальная сеть Красоты">
 		<meta name="author" content="Селявин Никита">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		
-		<link rel="stylesheet" href="../../css/style.css">
+
+		<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
 
 		<!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,35 +31,34 @@
 		<div class="container">
 			<div class="login">
 				<div class="login_logo">
-					<a href="/">
+					<a href="/auth">
 						<img src="../img/logo-1.png" alt="BeautyNet logo">
 					</a>
 				</div>
 				<div class="login_form checkin-form">
 					<h1>Регистрация аккаунта</h1>
 
-					<form action="" th:method="post" th:action="@{/signup}"  th:object="${user}">
+					<form action="" th:method="post" th:action="@{/auth/signup}"  th:object="${userDTO}">
 						<div class="login_form_input">
 							<input type="text" th:field="*{name}" placeholder="Введите ваше имя" required="" autocomplete="off">
 						</div>
 						<div class="login_form_input">
-							<input type="text" th:field="*{lastName}" placeholder="Введите вашу фамилию" required="" autocomplete="off">
+							<input type="text" th:field="*{lastname}" placeholder="Введите вашу фамилию" required="" autocomplete="off">
 						</div>
 						<div class="login_form_input">
 							<input type="text" th:field="*{username}" placeholder="Введите имя пользователя" required="" autocomplete="off">
-							<p style="color:#b22" th:text="${usernameError}"></p>
 						</div>
 						<div class="login_form_input">
 							<input type="email"  th:field="*{email}" placeholder="Введите ваш E-mail" required="" autocomplete="off">
-							<p style="color:#b22" th:text="${emailError}"></p>
 						</div>
 						<div class="login_form_input">
 							<input type="password"  th:field="*{password}"  placeholder="Введите ваш пароль" required="" autocomplete="off">
 						</div>
 						<div class="login_form_input">
-							<input type="password"  th:field="*{passwordConfirm}"  placeholder="Подтвердите пароль" required="" autocomplete="off">
-							<p style="color:#b22" th:text="${passwordError}"></p>
+							<input type="password" placeholder="Подтвердите пароль" required="" autocomplete="off">
 						</div>
+
+						<p th:if="${bindingError != null}" th:text="${bindingError}" style="color: red"></p>
 
 						<div class="login_form_input_button">
 							<button type="submit">Зарегистрироваться</button>
@@ -93,8 +92,7 @@
 			
 		</footer>
 
-		
-		<script src="../js/main.js"></script>
+		<script th:src="@{/styles/cssandjs/main.js}"></script>
 	</body>
 
 </html>

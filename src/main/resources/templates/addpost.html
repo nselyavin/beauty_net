@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <title>Add post</title>
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
-    <script th:src="@{/styles/cssandjs/main.js}"></script>
 </head>
 <body>
 <!--Header-->
@@ -20,16 +19,14 @@
             <a href="">Forum</a>
         </div>
         <div id="clel" class="top-panel_user">
-            <div class="top-panel_user_name">User Name</div>
+            <div class="top-panel_user_name" th:text="${userDetails.getUsername()}">User Name</div>
             <div class="top-panel_user_foto">
                 <img th:src="@{/img/user/1.jpg}" alt="">
             </div>
         </div>
         <div id="elmenu" class="top-panel_menu">
             <ul class="top-panel_menu_list">
-                <li><a href="">Profile</a></li>
-                <hr style="width: 70%;">
-                <li><a href="">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -42,10 +39,9 @@
         <!-- Форма добалвения поста. Ну всякие лейблы, переносы строк, все по красоте -->
           <form id="post_form" class="login_form" th:method="POST" th:action="@{/post/addpost}" th:object="${postDTO}" enctype="multipart/form-data">
             <input class="login_form_input" type="text" name="title" th:field="*{title}" placeholder="Title"/><br>
-            <input class="login_form_input" type="text" name="brand" th:field="*{brand}" placeholder="Brand"/><br>
+            <input type="hidden" name="brand"th:value="${userDetails.getUsername()}"/><br>
             <input class="login_form_input" type="file"name="file" th:field="*{image}" placeholder="uploadImage"/><br>
             <input class="login_form_input" type="text" name="description" th:field="*{description}" placeholder="Description" style="height: 45px"/><br>
-            <input class="login_form_input" type="text"name="username" th:field="*{username}" placeholder="Username"/><br>
 
               <ul id="inputed-tags"></ul>
               <input type="hidden" name="tagsStr" th:field="*{tagsStr}" id="tagsForm">
@@ -56,5 +52,6 @@
 </main>
 <footer class="footer">
 </footer>
+<script th:src="@{/styles/cssandjs/main.js}"></script>
 </body>
 </html>

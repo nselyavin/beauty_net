@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="https://thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
@@ -27,22 +27,19 @@
             <a href="">Forum</a>
         </div>
         <div id="clel" class="top-panel_user">
-            <div class="top-panel_user_name">User Name</div>
+            <div class="top-panel_user_name" th:text="${userDetails.getUsername()}">User Name</div>
             <div class="top-panel_user_foto">
                 <img th:src="@{/img/user/1.jpg}" alt="">
             </div>
         </div>
         <div id="elmenu" class="top-panel_menu">
             <ul class="top-panel_menu_list">
-                <li><a href="">Profile</a></li>
-                <hr style="width: 70%;">
-                <li><a href="">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
 </header>
 <!--End Header-->
-
 
 
 <main class="page">
@@ -52,10 +49,9 @@
     <h2 th:if="${searchTag != null}" th:text="'Поиск по тегу: ' + ${searchTag}"></h2>
 
     <!-- Кнопка добавить пост -->
-    <div class="btn-sm">
-        <a href="/post/addpost">Add post</a>
+    <div  class="btn-sm">
+        <a sec:authorize="hasAnyAuthority('ROLE_BRAND', 'ROLE_ADMIN')" href="/post/addpost">Add post</a>
     </div>
-
 
     <!-- Цикл по постам -->
     <div class="post-list">

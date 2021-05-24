@@ -9,6 +9,8 @@ import com.example.demo.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +56,10 @@ public class PostController {
     @GetMapping("/addpost")
     public String addPost(Model model){
         PostDTO postDTO = new PostDTO();
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("postDTO", postDTO);
+        model.addAttribute("userDetails", userDetails);
 
         return "addpost";
     }
@@ -110,6 +115,8 @@ public class PostController {
 
         PostDTO postDTO = new PostDTO();
         CommentDTO commentDTO = new CommentDTO();
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Comment> comments = commentService.getAllCommentsForPost(postId);
 
         model.addAttribute("post", post);
@@ -117,6 +124,7 @@ public class PostController {
         model.addAttribute("commentDTO", commentDTO);
         model.addAttribute("comments", comments);
         model.addAttribute("image", post.getEncodedImage());
+        model.addAttribute("userDetails", userDetails);
 
 
         if(post.getLikedUsers().stream().anyMatch(u -> u.equals("noname"))){

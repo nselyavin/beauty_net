@@ -20,10 +20,7 @@ public class Post {
     private String title;
     private String description;
     private String brand;
-    //@Column(columnDefinition = "0")
-    // ToDo возможность ставить лайки и дизлайки
     private Integer likes = 0;
-    //@Column(columnDefinition = '0')
     private Integer dislikes = 0;
 
     @Lob

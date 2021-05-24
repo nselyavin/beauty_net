@@ -32,16 +32,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <a href="">Forum</a>
         </div>
         <div id="clel" class="top-panel_user">
-            <div class="top-panel_user_name">User Name</div>
+            <div class="top-panel_user_name" th:text="${userDetails.getUsername()}">User Name</div>
             <div class="top-panel_user_foto">
                 <img th:src="@{/img/user/1.jpg}" alt="">
             </div>
         </div>
         <div id="elmenu" class="top-panel_menu">
             <ul class="top-panel_menu_list">
-                <li><a href="">Profile</a></li>
-                <hr style="width: 70%;">
-                <li><a href="">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -60,9 +58,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <div class="post_img">
                 <img th:src="@{'data:image/jpeg;base64,'+${image}}" style="max-width: 800px">
             </div>
-            <div class="post_from">
-                <p th:text="${post.username}">creator username</p>
-            </div>
 
             <div class="post-list_tags" >
                 <div class="post-list_tags_item" th:each="tag : ${post.tags}">
@@ -73,7 +68,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <div class="post_rating">
                 <div class="post_rating_item" th:classappend="${(bLiked) ? 'rating-like-action' : 'rating-like'}">
                     <form th:action="@{/post/{id}/like(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
-                        <input type="hidden" name="markedUsername" th:value="noname">
+                        <input type="hidden" name="markedUsername" th:value="${userDetails.getUsername()}">
                         <input type="submit" value="">
                     </form>
 
@@ -81,7 +76,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                 </div>
                 <div class="post_rating_item" th:classappend="${(bDisliked) ? 'rating-dislike-action' : 'rating-dislike'}">
                     <form th:action="@{/post/{id}/dislike(id=${post.getId()})}" th:method="POST" th:object="${postDTO}">
-                        <input type="hidden" name="markedUsername" th:value="noname">
+                        <input type="hidden" name="markedUsername" th:value="${userDetails.getUsername()}">
                         <input type="submit" value="">
                     </form>
                     <p><span th:text="${post.dislikes}">0</span></p>
@@ -105,10 +100,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
             <div class="post_comment-form">
                 <form th:method="POST" th:action="@{/post/{id}/addcomment(id=${post.getId()})}" th:object="${commentDTO}">
                     <div class="post_comment-form_input">
-                        <input type="text" name="username" th:field="*{username}" placeholder="username"/>
+                        <input type="hidden" name="username" th:value="${userDetails.getUsername()}"/>
                     </div>
                     <div class="post_comment-form_input">
-                        <input type="text" name="username" th:field="*{message}" placeholder="message"/>
+                        <input type="text" name="message" th:field="*{message}" placeholder="message"/>
                     </div>
                     <div class="post_comment-form_button">
                         <button type="submit">Comment</button>
