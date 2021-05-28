@@ -1,0 +1,72 @@
+<!doctype html>
+
+<html lang="ru"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>BeautyNet</title>
+		<meta name="description" content="Социальная сеть Красоты">
+		<meta name="author" content="Селявин Никита">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+		<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+
+		<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+	</head>
+	
+	<body>
+		<!--Header-->
+		<header class="header">
+
+		</header>
+		<!--End Header-->
+		<main class="page">
+		<div class="container">
+			
+			<div class="login">
+				<div class="login_logo">
+					<a href="/auth">
+						<img th:src="@{/img/logo-1.png}" alt="BeautyNet logo" >
+					</a>
+				</div>
+				<div class="login_form">
+					<h1>Войдите в свой аккаунт</h1>
+
+					<form action="/auth" method="POST" name="login-form">
+
+						<div class="login_form_input">
+							<input type="text" name="username" placeholder="Введите имя пользователя" required="" autocomplete="off" autofocus="true">
+						</div>
+						<div class="login_form_input">
+							<input type="password" name="password" placeholder="Введите ваш пароль" required="" autocomplete="off">
+						</div>
+						
+						<div class="login_form_input_button">
+							<button type="submit">Вход</button>
+						</div>
+					</form>
+
+					<p class="forgot-pass"><a href="/auth/recovery">Забыли пароль?</a></p>
+					<div class="regak-link">
+						<a href="/auth/signup">Создать аккаунт</a>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		</main>
+		<footer class="footer">
+			
+		</footer>
+
+
+		<script th:src="@{/styles/cssandjs/main.js}"></script>
+	</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lenta</title>
+    <meta name="description" content="Социальная сеть Красоты">
+    <meta name="author" content="Селявин Никита">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--Header-->
+<header class="header">
+    <div class="top-panel">
+        <div class="top-panel_logo">
+            <a href="/"><img th:src="@{/img/logo-1.png}" alt=""></a>
+        </div>
+        <div class="top-panel_link">
+            <a href="">Forum</a>
+        </div>
+        <div id="clel" class="top-panel_user">
+            <div class="top-panel_user_name" th:text="${userDetails.getUsername()}">User Name</div>
+            <div class="top-panel_user_foto">
+                <img th:src="@{/img/user/1.jpg}" alt="">
+            </div>
+        </div>
+        <div id="elmenu" class="top-panel_menu">
+            <ul class="top-panel_menu_list">
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!--End Header-->
+
+
+<main class="page">
+<div class="container">
+    <h1>Lenta</h1>
+
+    <h2 th:if="${searchTag != null}" th:text="'Поиск по тегу: ' + ${searchTag}"></h2>
+
+    <!-- Кнопка добавить пост -->
+    <div  class="btn-sm">
+        <a sec:authorize="hasAnyAuthority('ROLE_BRAND', 'ROLE_ADMIN')" href="/post/addpost">Add post</a>
+    </div>
+
+    <!-- Цикл по постам -->
+    <div class="post-list">
+        <div  class="post-list-item" th:each="post : ${posts}">
+            <!-- Все что внутри этого дива, это отдельный пост -->
+                <div class="post-list_title">
+                    <a th:href="@{/post/{id}(id=${post.getId()})}" th:text="${post.getTitle()}">Title</a>
+                </div>
+
+                <div class="post-list_brand">
+                    <p class="post-list_brand_p" th:text="${post.getBrand()}">Brand</p>
+                </div>
+                <div class="post-list_img">
+                    <img  th:src="@{'data:image/jpeg;base64,'+${post.getEncodedImage()}}" style="height: 300px;">
+                </div>
+
+                <div class="post-list_rating">
+                    <span class="likes" th:text="${post.getLikes()}">Likes</span>
+                    <span> | </span>
+                    <span class="dislikes" th:text="${post.getDislikes()}">Dislikes</span>
+                </div>
+        </div>
+    </div>
+</div>
+</main>
+<!-- Это вложенный цикл по тегам поста, пока не реализовал его, но можно какие-нибудь стили прикрутить -->
+<!--    <div class="tags" th:each="tag : ${post.getTags()}">-->
+<!--        <span class="tag" th:text="tag"> tag </span>,-->
+<!--    </div>-->
+<footer class="footer">
+</footer>
+<script th:src="@{/styles/cssandjs/main.js}"></script>
+</body>
+</html>

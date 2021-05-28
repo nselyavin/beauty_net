@@ -1,0 +1,98 @@
+<!doctype html>
+
+<html lang="ru"
+	  xmlns:th="https://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:form="http://www.springframework.org/tags/form">
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>BeautyNet</title>
+		<meta name="description" content="Социальная сеть Красоты">
+		<meta name="author" content="Селявин Никита">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+		<link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+
+		<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+	</head>
+	
+	<body>
+		<!--Header-->
+		<header class="header">
+		</header>
+		<!--End Header-->
+		<main class="page">
+		<div class="container">
+			<div class="login">
+				<div class="login_logo">
+					<a href="/auth">
+						<img src="../img/logo-1.png" alt="BeautyNet logo">
+					</a>
+				</div>
+				<div class="login_form checkin-form">
+					<h1>Регистрация аккаунта</h1>
+
+					<form action="" th:method="post" th:action="@{/auth/signup}"  th:object="${userDTO}">
+						<div class="login_form_input">
+							<input type="text" th:field="*{name}" placeholder="Введите ваше имя" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="text" th:field="*{lastname}" placeholder="Введите вашу фамилию" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="text" th:field="*{username}" placeholder="Введите имя пользователя" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="email"  th:field="*{email}" placeholder="Введите ваш E-mail" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="password"  th:field="*{password}"  placeholder="Введите ваш пароль" required="" autocomplete="off">
+						</div>
+						<div class="login_form_input">
+							<input type="password" placeholder="Подтвердите пароль" required="" autocomplete="off">
+						</div>
+
+						<p th:if="${bindingError != null}" th:text="${bindingError}" style="color: red"></p>
+
+						<div class="login_form_input_button">
+							<button type="submit">Зарегистрироваться</button>
+						</div>
+					</form>
+<!--					<form:form method="POST" modelAttribute="userForm">-->
+<!--						<h2>Регистрация</h2>-->
+<!--						<div>-->
+<!--							<form:input type="text" path="username" placeholder="Username"-->
+<!--										autofocus="true"></form:input>-->
+<!--							<form:errors path="username"></form:errors>-->
+<!--							${usernameError}-->
+<!--						</div>-->
+<!--						<div>-->
+<!--							<form:input type="password" path="password" placeholder="Password"></form:input>-->
+<!--						</div>-->
+<!--						<div>-->
+<!--							<form:input type="password" path="passwordConfirm"-->
+<!--										placeholder="Confirm your password"></form:input>-->
+<!--							<form:errors path="password"></form:errors>-->
+<!--							${passwordError}-->
+<!--						</div>-->
+<!--						<button type="submit">Зарегистрироваться</button>-->
+<!--					</form:form>-->
+				</div>
+			</div>
+		</div>
+			
+		</main>
+		<footer class="footer">
+			
+		</footer>
+
+		<script th:src="@{/styles/cssandjs/main.js}"></script>
+	</body>
+
+</html>
